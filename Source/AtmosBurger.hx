@@ -11,7 +11,7 @@ import nme.display.StageScaleMode;
 import nme.events.Event;
 import nme.geom.Matrix;
 import nme.Lib;
-
+import com.eclecticdesignstudio.motion.Actuate;
 
 /**
  * @author 
@@ -97,17 +97,23 @@ class AtmosBurger extends Sprite {
 	
 	// Entry point
 	public function update(event:Event) {
-		var hiti:Int = -1;
-		for (i in 0...burgerPieces.length) {
-			if (claw.hitTestObject(burgerPieces[i])) {
-				burger.addBurgerPiece(burgerPieces[i]);
-				hiti = i;
-				break;
+		if (claw.getIsOut() && !claw.getIsRetracting()) {
+			var hiti:Int = -1;
+			for (i in 0...burgerPieces.length) {
+				if (claw.hitTestObject(burgerPieces[i])) {
+					burger.addBurgerPiece(burgerPieces[i]);
+					hiti = i;
+					
+					Actuate.stop(claw);
+					claw.retract(750);
+					
+					break;
+				}
 			}
-		}
-		
-		if (hiti != -1) {
-			burgerPieces.splice(hiti, 1);
+			
+			if (hiti != -1) {
+				burgerPieces.splice(hiti, 1);
+			}
 		}
 	}
 	

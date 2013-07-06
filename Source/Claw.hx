@@ -58,10 +58,12 @@ class Claw extends Sprite
 		var time:Float = distance / 750.0;
 		
 		setIsOut(true);
-		Actuate.tween(claw, time, { x: target.x } ).ease(Linear.easeNone).onComplete(retract, [time]).onUpdate(drawLine);
+		Actuate.tween(claw, time, { x: target.x } ).ease(Linear.easeNone).onComplete(retract, [750.0]).onUpdate(drawLine);
 	}
 	
-	public function retract(time:Float ) {
+	public function retract(speed:Float) {
+		var distance:Float = target.x - arm.width;
+		var time:Float = distance / speed;
 		setIsRetracting(true);
 		Actuate.tween(claw, time, { x: arm.width } ).ease(Linear.easeNone).onComplete(setIsOut, [false]).onUpdate(drawLine);
 	}
@@ -91,11 +93,18 @@ class Claw extends Sprite
 	public function setIsOut(isOut:Bool) {
 		this.isOut = isOut;
 		if (!isOut) {
+			this.isRetracting = false;
 			graphics.clear();
 		}
 	}
+	public function getIsOut():Bool {
+		return this.isOut;
+	}
 	public function setIsRetracting(isRetracting:Bool) {
 		this.isRetracting = isRetracting;
+	}
+	public function getIsRetracting():Bool {
+		return this.isRetracting;
 	}
 	
 	private function distance(x1:Float, y1:Float, x2:Float, y2:Float):Float {
