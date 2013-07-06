@@ -30,7 +30,7 @@ class AtmosBurger extends Sprite {
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		Lib.current.stage.frameRate = 0;
 		
-		addChild(new BurgerPiece());
+		addChild(new Claw());
 	}
 	
 	
