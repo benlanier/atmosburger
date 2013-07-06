@@ -8,6 +8,7 @@ import nme.display.Sprite;
 import nme.display.Bitmap;
 import nme.Assets;
 import nme.events.Event;
+import nme.Lib;
 
 enum Ingredient {
 	BBun;
@@ -46,6 +47,8 @@ class BurgerPiece extends Sprite
 		addChild(bm);
 		//bobDown(1.0);
 		//Actuate.tween(this, 100.0, { x: this.x + 800 } ).ease(Linear.easeNone);
+		x = Math.random() * Lib.stage.width;
+		y = Math.random() * (Lib.stage.height - 110);
 	}
 	
 	private function bobDown(time:Float) {

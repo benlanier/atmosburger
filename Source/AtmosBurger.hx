@@ -8,6 +8,7 @@ import nme.display.Shape;
 import nme.display.Sprite;
 import nme.display.StageAlign;
 import nme.display.StageScaleMode;
+import nme.events.Event;
 import nme.geom.Matrix;
 import nme.Lib;
 
@@ -18,6 +19,9 @@ import nme.Lib;
 class AtmosBurger extends Sprite {
 	
 	var burger:Burger;
+	var claw:Claw;
+	var burgerPieces:Array<BurgerPiece>;
+	
 	
 	public function new () {
 		
@@ -45,10 +49,21 @@ class AtmosBurger extends Sprite {
 		restaurant.y = Lib.stage.height - restaurant.height;
 		addChild(restaurant);
 		
-		addChild(new BurgerPiece(Meat));
-		addChild(new Claw());
+		burgerPieces = new Array<BurgerPiece>();
+		
+		var piece:BurgerPiece;
+		for (i in 0...24) {
+			piece = new BurgerPiece(Meat);
+			burgerPieces.push(piece);
+			addChild(piece);
+		}
+		
+		
+		claw = new Claw();
+		addChild(claw);
+		
 		burger = new Burger();
-		burger.addBurgerPiece(new BurgerPiece(BBun));
+		/*burger.addBurgerPiece(new BurgerPiece(BBun));
 		burger.addBurgerPiece(new BurgerPiece(BBun));
 		burger.addBurgerPiece(new BurgerPiece(BBun));
 		burger.addBurgerPiece(new BurgerPiece(BBun));
@@ -71,15 +86,30 @@ class AtmosBurger extends Sprite {
 		burger.addBurgerPiece(new BurgerPiece(SBun));
 		burger.addBurgerPiece(new BurgerPiece(SBun));
 		burger.addBurgerPiece(new BurgerPiece(SBun));
-		burger.addBurgerPiece(new BurgerPiece(SBun));
+		burger.addBurgerPiece(new BurgerPiece(SBun));*/
 		addChild(burger);
+		
+		addEventListener (Event.ENTER_FRAME, update);
 	}
 	
 	
 	
 	
 	// Entry point
-	
+	public function update(event:Event) {
+		var hiti:Int = -1;
+		for (i in 0...burgerPieces.length) {
+			if (claw.hitTestObject(burgerPieces[i])) {
+				burger.addBurgerPiece(burgerPieces[i]);
+				hiti = i;
+				break;
+			}
+		}
+		
+		if (hiti != -1) {
+			burgerPieces.splice(hiti, 1);
+		}
+	}
 	
 	
 	

@@ -19,6 +19,7 @@ class Claw extends Sprite
 	private var baseX:Float = 0;
 	private var baseY:Float = 0;
 	private var isOut:Bool = false;
+	private var isRetracting:Bool = false;
 	
 	private var claw:Bitmap;
 	private var arm:Bitmap;
@@ -61,6 +62,7 @@ class Claw extends Sprite
 	}
 	
 	public function retract(time:Float ) {
+		setIsRetracting(true);
 		Actuate.tween(claw, time, { x: arm.width } ).ease(Linear.easeNone).onComplete(setIsOut, [false]).onUpdate(drawLine);
 	}
 	
@@ -91,6 +93,9 @@ class Claw extends Sprite
 		if (!isOut) {
 			graphics.clear();
 		}
+	}
+	public function setIsRetracting(isRetracting:Bool) {
+		this.isRetracting = isRetracting;
 	}
 	
 	private function distance(x1:Float, y1:Float, x2:Float, y2:Float):Float {

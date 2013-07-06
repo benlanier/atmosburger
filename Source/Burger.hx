@@ -18,8 +18,8 @@ class Burger extends Sprite
 		
 		burgerPieces = new Array<BurgerPiece>();
 		
-		x = Lib.stage.width / 2;
-		y = Lib.stage.height / 2 -100;
+		x = Lib.stage.width / 2 + 150;
+		y = Lib.stage.height - size*4.5;
 	}
 	
 	public function addBurgerPiece(piece:BurgerPiece) {
@@ -30,7 +30,7 @@ class Burger extends Sprite
 							   x:Std.int(burgerPieces.length % 6) * piece.width } );*/
 		//Actuate.stop(piece);
 		
-		burgerPieces.insert(burgerPieces.length, piece);
+		burgerPieces.push(piece);
 		addChild(piece);
 	}
 }
