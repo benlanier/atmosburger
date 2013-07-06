@@ -33,7 +33,6 @@ class BurgerPiece extends Sprite
 				bm = new Bitmap(Assets.getBitmapData("assets/small/bbun.png"));
 			case Meat:
 				bm = new Bitmap(Assets.getBitmapData("assets/small/meat.png"));
-				trace(bm.width);
 			case Lettuce:
 				bm = new Bitmap(Assets.getBitmapData("assets/small/lettuce.png"));
 			case Tomato:
