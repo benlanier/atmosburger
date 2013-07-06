@@ -45,6 +45,13 @@ class Claw extends Sprite
 		//this.transform.matrix.rotate(Math.atan2(event.stageY - baseY, event.stageX - baseX));
 		//this.transform.matrix.translate(baseX, baseY);
 		this.rotation = Math.atan2(event.stageY - baseY, event.stageX - baseX) / Math.PI * 180;
+		if (this.rotation > 0)
+		{
+			if(this.rotation < 90)
+				this.rotation = 0;
+			else
+				this.rotation = 180;
+		}
 		
 		// Calculate travel time
 		var distance:Float = distance(baseX, baseY, event.stageX, event.stageY);
@@ -52,7 +59,13 @@ class Claw extends Sprite
 		
 		setIsOut(true);
 		Actuate.tween(this, time, { x: event.stageX } ).ease(Linear.easeNone);
-		Actuate.tween(this, time, { y: event.stageY } ).ease(Linear.easeNone).onComplete(retract, [time]);
+		
+		if (event.stageY > baseY) {
+			Actuate.tween(this, time, { y: baseY } ).ease(Linear.easeNone).onComplete(retract, [time]);
+		}
+		else {
+			Actuate.tween(this, time, { y: event.stageY } ).ease(Linear.easeNone).onComplete(retract, [time]);
+		}
 	}
 	
 	public function retract(time:Float ) {
@@ -64,9 +77,20 @@ class Claw extends Sprite
 		if (!isOut)
 		{
 			var angle:Float = Math.atan2(Lib.stage.mouseY - baseY, Lib.stage.mouseX - baseX) / Math.PI * 180;
-			trace(angle);
-			if (angle <= 0)
-				this.rotation = angle;
+			if (angle > 0)
+			{
+				if(angle < 90)
+					angle = 0;
+				else
+					angle = 180;
+			}
+			this.rotation = angle;
+		}
+		else
+		{
+			graphics.clear();
+			graphics.moveTo(0, 0);
+			graphics.lineTo(x, y);
 		}
 	}
 	
