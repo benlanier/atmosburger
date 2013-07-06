@@ -31,6 +31,7 @@ class AtmosBurger extends Sprite {
 		Lib.current.stage.frameRate = 0;
 		
 		addChild(new Claw());
+		addChild(new BurgerPiece(Meat));
 	}
 	
 	

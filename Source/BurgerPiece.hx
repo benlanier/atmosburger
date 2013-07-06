@@ -1,8 +1,13 @@
 package ;
 
+import com.eclecticdesignstudio.motion.Actuate;
+import com.eclecticdesignstudio.motion.easing.Expo;
+import com.eclecticdesignstudio.motion.easing.Linear;
+import com.eclecticdesignstudio.motion.easing.Quad;
 import nme.display.Sprite;
 import nme.display.Bitmap;
-import  nme.Assets;
+import nme.Assets;
+import nme.events.Event;
 
 enum Ingredient {
 	BBun;
@@ -19,21 +24,36 @@ enum Ingredient {
 class BurgerPiece extends Sprite
 {
 
-	public function new(i:Ingredient=BBun) 
+	public function new(i:Ingredient) 
 	{
 		super();
+		var bm:Bitmap;
 		switch (i) {
 			case BBun:
-				addChild(new Bitmap(Assets.getBitmapData("assets/small/bbun.png")));
+				bm = new Bitmap(Assets.getBitmapData("assets/small/bbun.png"));
 			case Meat:
-				addChild(new Bitmap(Assets.getBitmapData("assets/small/meat.png")));
+				bm = new Bitmap(Assets.getBitmapData("assets/small/meat.png"));
+				trace(bm.width);
 			case Lettuce:
-				addChild(new Bitmap(Assets.getBitmapData("assets/small/lettuce.png")));
+				bm = new Bitmap(Assets.getBitmapData("assets/small/lettuce.png"));
 			case Tomato:
-				addChild(new Bitmap(Assets.getBitmapData("assets/small/tomato.png")));
+				bm = new Bitmap(Assets.getBitmapData("assets/small/tomato.png"));
 			case SBun:
-				addChild(new Bitmap(Assets.getBitmapData("assets/small/sbun.png")));
+				bm = new Bitmap(Assets.getBitmapData("assets/small/sbun.png"));
 		}
+		bm.x = -bm.width / 2;
+		bm.y = -bm.height / 2;
+		addChild(bm);
+		bobDown(1.0);
+		Actuate.tween(this, 100.0, { x: this.x + 800 } ).ease(Linear.easeNone);
+	}
+	
+	private function bobDown(time:Float) {
+		Actuate.tween(this, time, { y: this.y + 25 } ).ease(Quad.easeInOut).onComplete(bobUp, [time]);
+	}
+	
+	private function bobUp(time:Float) {
+		Actuate.tween(this, time, { y: this.y - 25 } ).ease(Quad.easeInOut).onComplete(bobDown, [time]);
 	}
 	
 }
