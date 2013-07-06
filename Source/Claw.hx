@@ -25,10 +25,11 @@ class Claw extends Sprite
 	public function onClick(event:MouseEvent) {
 		var distance:Float = distance(baseX, baseY, event.stageX, event.stageY);
 		trace(distance);
-		var time:Float = distance / 1000.0;
+		var time:Float = distance / 750.0;
 		trace(time);
+		
 		Actuate.tween(this, time, { x: event.stageX } ).ease(Linear.easeNone);
-		Actuate.tween(this, time, { y: event.stageY } ).ease(Linear.easeNone).onComplete(retract, time);
+		Actuate.tween(this, time, { y: event.stageY } ).ease(Linear.easeNone).onComplete(retract, [time]);
 	}
 	
 	public function retract(time:Float ) {
