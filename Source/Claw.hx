@@ -7,6 +7,7 @@ import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Linear;
 import nme.Lib;
 import nme.geom.Matrix;
+import nme.events.Event;
 
 /**
  * ...
@@ -20,23 +21,32 @@ class Claw extends Sprite
 	
 	public function new() {
 		super();
+		
 		var image:Bitmap = new Bitmap(Assets.getBitmapData("assets/small/claw.png"));
-		
-		/*var m:Matrix = new Matrix();
-		m.translate(0, image.height / 2);
-		this.transform.matrix = m;*/
-		image.y -= image.height / 2;
-		
+		image.x = 0;
+		image.y = - image.height / 2;
 		addChild(image);
+		
+		baseX = Lib.stage.width / 2;
+		baseY = Lib.stage.height - 200;
+		x = baseX;
+		y = baseY;
+		
 		Lib.stage.addEventListener(MouseEvent.MOUSE_DOWN, onClick);
+		Lib.stage.addEventListener(Event.ENTER_FRAME, update);
 	}
 	
 	public function onClick(event:MouseEvent) {
 		if (isOut)
 			return;
+			
+		// Rotate around base
+		//this.transform.matrix.translate(-baseX, -baseY);
+		//this.transform.matrix.rotate(Math.atan2(event.stageY - baseY, event.stageX - baseX));
+		//this.transform.matrix.translate(baseX, baseY);
+		this.rotation = Math.atan2(event.stageY - baseY, event.stageX - baseX) / Math.PI * 180;
 		
-		this.rotation = Math.atan2(event.stageY - baseY, event.stageX - baseX)/(Math.PI*2) * 360;
-		trace(this.rotation);
+		// Calculate travel time
 		var distance:Float = distance(baseX, baseY, event.stageX, event.stageY);
 		var time:Float = distance / 750.0;
 		
@@ -48,7 +58,16 @@ class Claw extends Sprite
 	public function retract(time:Float ) {
 		Actuate.tween(this, time, { x: baseX } ).ease(Linear.easeNone);
 		Actuate.tween(this, time, { y: baseY } ).ease(Linear.easeNone).onComplete(setIsOut, [false]);
-		
+	}
+	
+	public function update(event:Event) {
+		if (!isOut)
+		{
+			var angle:Float = Math.atan2(Lib.stage.mouseY - baseY, Lib.stage.mouseX - baseX) / Math.PI * 180;
+			trace(angle);
+			if (angle <= 0)
+				this.rotation = angle;
+		}
 	}
 	
 	public function setIsOut(isOut:Bool) {
