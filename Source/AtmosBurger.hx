@@ -14,14 +14,13 @@ import nme.Lib;
  */
 class AtmosBurger extends Sprite {
 	
+	var burger:Burger;
 	
 	public function new () {
 		
 		super ();
 		
 		initialize ();
-		
-		
 	}
 	
 	
@@ -37,6 +36,32 @@ class AtmosBurger extends Sprite {
 		
 		addChild(new BurgerPiece(Meat));
 		addChild(new Claw());
+		burger = new Burger();
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		burger.addBurgerPiece(new BurgerPiece(Lettuce));
+		burger.addBurgerPiece(new BurgerPiece(Tomato));
+		addChild(burger);
 	}
 	
 	
