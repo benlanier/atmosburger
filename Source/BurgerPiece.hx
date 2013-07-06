@@ -23,7 +23,8 @@ enum Ingredient {
  */
 class BurgerPiece extends Sprite
 {
-
+	public var isFlying:Bool = true;
+	
 	public function new(i:Ingredient) 
 	{
 		super();
@@ -43,16 +44,18 @@ class BurgerPiece extends Sprite
 		bm.x = -bm.width / 2;
 		bm.y = -bm.height / 2;
 		addChild(bm);
-		bobDown(1.0);
-		Actuate.tween(this, 100.0, { x: this.x + 800 } ).ease(Linear.easeNone);
+		//bobDown(1.0);
+		//Actuate.tween(this, 100.0, { x: this.x + 800 } ).ease(Linear.easeNone);
 	}
 	
 	private function bobDown(time:Float) {
-		Actuate.tween(this, time, { y: this.y + 25 } ).ease(Quad.easeInOut).onComplete(bobUp, [time]);
+		if(isFlying)
+			Actuate.tween(this, time, { y: this.y + 25 } ).ease(Quad.easeInOut).onComplete(bobUp, [time]);
 	}
 	
 	private function bobUp(time:Float) {
-		Actuate.tween(this, time, { y: this.y - 25 } ).ease(Quad.easeInOut).onComplete(bobDown, [time]);
+		if (isFlying)
+			Actuate.tween(this, time, { y: this.y - 25 } ).ease(Quad.easeInOut).onComplete(bobDown, [time]);
 	}
 	
 }

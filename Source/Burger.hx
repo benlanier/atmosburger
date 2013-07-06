@@ -10,6 +10,7 @@ import com.eclecticdesignstudio.motion.Actuate;
 class Burger extends Sprite
 {
 	private var burgerPieces:Array<BurgerPiece>;
+	private var size:Float = 19;
 
 	public function new() 
 	{
@@ -22,10 +23,13 @@ class Burger extends Sprite
 	}
 	
 	public function addBurgerPiece(piece:BurgerPiece) {
-		
-		Actuate.apply(piece, { y:Std.int(burgerPieces.length / 6) * piece.height, 
-							   x:Std.int(burgerPieces.length % 6) * piece.width } );
+		piece.isFlying = false;
+		piece.y = 4*size - Std.int(burgerPieces.length / 6) * size;
+		piece.x = Std.int(burgerPieces.length % 6) * size + size/2;
+		/*Actuate.apply(piece, { y:Std.int(burgerPieces.length / 6) * piece.height, 
+							   x:Std.int(burgerPieces.length % 6) * piece.width } );*/
 		//Actuate.stop(piece);
+		
 		burgerPieces.insert(burgerPieces.length, piece);
 		addChild(piece);
 	}
