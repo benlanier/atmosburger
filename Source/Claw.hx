@@ -5,6 +5,7 @@ import nme.Assets;
 import nme.events.MouseEvent;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Linear;
+import nme.geom.Point;
 import nme.Lib;
 import nme.geom.Matrix;
 import nme.events.Event;
@@ -19,16 +20,25 @@ class Claw extends Sprite
 	private var baseY:Float = 0;
 	private var isOut:Bool = false;
 	
+	private var claw:Bitmap;
+	private var arm:Bitmap;
+	
+	private var target:Point;
+	
 	public function new() {
 		super();
 		
-		var image:Bitmap = new Bitmap(Assets.getBitmapData("assets/small/claw.png"));
-		image.x = 0;
-		image.y = - image.height / 2;
-		addChild(image);
+		arm = new Bitmap(Assets.getBitmapData("assets/small/arm.png"));
+		arm.y = -arm.height/2;
+		addChild(arm);
+		
+		claw = new Bitmap(Assets.getBitmapData("assets/small/claw.png"));
+		claw.x = arm.width;
+		claw.y = - claw.height / 2;
+		addChild(claw);
 		
 		baseX = Lib.stage.width / 2;
-		baseY = Lib.stage.height - 200;
+		baseY = Lib.stage.height - 101;
 		x = baseX;
 		y = baseY;
 		
@@ -40,37 +50,25 @@ class Claw extends Sprite
 		if (isOut)
 			return;
 			
-		// Rotate around base
-		//this.transform.matrix.translate(-baseX, -baseY);
-		//this.transform.matrix.rotate(Math.atan2(event.stageY - baseY, event.stageX - baseX));
-		//this.transform.matrix.translate(baseX, baseY);
-		this.rotation = Math.atan2(event.stageY - baseY, event.stageX - baseX) / Math.PI * 180;
-		if (this.rotation > 0)
-		{
-			if(this.rotation < 90)
-				this.rotation = 0;
-			else
-				this.rotation = 180;
-		}
+		target = globalToLocal(new Point(event.stageX, event.stageY));
 		
 		// Calculate travel time
-		var distance:Float = distance(baseX, baseY, event.stageX, event.stageY);
+		var distance:Float = target.x - arm.width;
 		var time:Float = distance / 750.0;
 		
 		setIsOut(true);
-		Actuate.tween(this, time, { x: event.stageX } ).ease(Linear.easeNone);
-		
-		if (event.stageY > baseY) {
-			Actuate.tween(this, time, { y: baseY } ).ease(Linear.easeNone).onComplete(retract, [time]);
-		}
-		else {
-			Actuate.tween(this, time, { y: event.stageY } ).ease(Linear.easeNone).onComplete(retract, [time]);
-		}
+		Actuate.tween(claw, time, { x: target.x } ).ease(Linear.easeNone).onComplete(retract, [time]).onUpdate(drawLine);
 	}
 	
 	public function retract(time:Float ) {
-		Actuate.tween(this, time, { x: baseX } ).ease(Linear.easeNone);
-		Actuate.tween(this, time, { y: baseY } ).ease(Linear.easeNone).onComplete(setIsOut, [false]);
+		Actuate.tween(claw, time, { x: arm.width } ).ease(Linear.easeNone).onComplete(setIsOut, [false]).onUpdate(drawLine);
+	}
+	
+	private function drawLine() {
+		graphics.clear();
+		graphics.lineStyle(1);
+		graphics.moveTo(arm.width, 0);
+		graphics.lineTo(claw.x, 0);
 	}
 	
 	public function update(event:Event) {
@@ -86,16 +84,13 @@ class Claw extends Sprite
 			}
 			this.rotation = angle;
 		}
-		else
-		{
-			graphics.clear();
-			graphics.moveTo(0, 0);
-			graphics.lineTo(x, y);
-		}
 	}
 	
 	public function setIsOut(isOut:Bool) {
 		this.isOut = isOut;
+		if (!isOut) {
+			graphics.clear();
+		}
 	}
 	
 	private function distance(x1:Float, y1:Float, x2:Float, y2:Float):Float {

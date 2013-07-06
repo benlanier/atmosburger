@@ -31,6 +31,7 @@ class AtmosBurger extends Sprite {
 		Lib.current.stage.frameRate = 0;
 		
 		var restaurant:Bitmap = new Bitmap(Assets.getBitmapData("assets/small/restaurant.png"));
+		restaurant.x = Lib.stage.width / 2 - restaurant.width / 2;
 		restaurant.y = Lib.stage.height - restaurant.height;
 		addChild(restaurant);
 		
