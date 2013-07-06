@@ -1,6 +1,8 @@
 package ;
 
 
+import nme.Assets;
+import nme.display.Bitmap;
 import nme.display.Sprite;
 import nme.display.StageAlign;
 import nme.display.StageScaleMode;
@@ -20,7 +22,6 @@ class AtmosBurger extends Sprite {
 		initialize ();
 		
 		
-		
 	}
 	
 	
@@ -30,8 +31,12 @@ class AtmosBurger extends Sprite {
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		Lib.current.stage.frameRate = 0;
 		
-		addChild(new Claw());
+		var restaurant:Bitmap = new Bitmap(Assets.getBitmapData("assets/small/restaurant.png"));
+		restaurant.y = Lib.stage.height - restaurant.height;
+		addChild(restaurant);
+		
 		addChild(new BurgerPiece(Meat));
+		addChild(new Claw());
 	}
 	
 	
