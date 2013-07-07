@@ -70,7 +70,7 @@ class ResultsScene extends Sprite
 		var covering:Shape = new Shape();
 		covering.graphics.beginFill(0);
 		covering.graphics.drawRect(0, 0, stars.width, stars.height);
-		covering.x = 410+stars.width - (410 - (stars.width * score / 5));
+		covering.x = stars.x+stars.width - (410 - (stars.width * score / 5));
 		covering.y = 245;
 		addChild(covering);
 		
