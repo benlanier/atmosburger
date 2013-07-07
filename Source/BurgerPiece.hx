@@ -24,7 +24,23 @@ enum Ingredient {
  */
 class BurgerPiece extends Sprite
 {
-	public var isFlying:Bool = true;
+	private var isFlying:Bool = true;
+	private var phase:Float;
+	private var phaseOffset:Float;
+	private var amplitude:Float;
+	private var baseX:Float;
+	private var baseY:Float;
+	private var velocityX:Float;
+	
+	private var timeElapsed:Float = 0;
+	private var timePerFrame:Float = 1.0 / 60;
+	
+	public function setIsFlying(isFlying:Bool) {
+		this.isFlying = isFlying;
+	}
+	public function getIsFlying():Bool {
+		return isFlying;
+	}
 	
 	public function new(i:Ingredient) 
 	{
@@ -45,10 +61,35 @@ class BurgerPiece extends Sprite
 		bm.x = -bm.width / 2;
 		bm.y = -bm.height / 2;
 		addChild(bm);
+		
 		//bobDown(1.0);
 		//Actuate.tween(this, 100.0, { x: this.x + 800 } ).ease(Linear.easeNone);
-		x = Math.random() * Lib.stage.width;
-		y = Math.random() * (Lib.stage.height - 110);
+		
+		baseX = (Math.random() * (Lib.stage.width - width/2)) + width/2;
+		baseY = Math.random() * (Lib.stage.height - 300) + 80;
+		
+		x = baseX;
+		y = baseY;
+		
+		phase = (Math.random() * 2) + 2;
+		phaseOffset = Math.random() * Math.PI / 2;
+		
+		amplitude = Math.random() * 90 + 10;
+		
+		velocityX = Math.random() * 250 - 125;
+		
+		addEventListener (Event.ENTER_FRAME, update);
+	}
+	
+	public function update(event:Event) {
+		if(isFlying) {
+			y = baseY + Math.sin(timeElapsed / phase * Math.PI * 2 + phaseOffset) * amplitude;
+			if (x - width/2 < 0 || x + width/2 > Lib.stage.width) {
+				velocityX *= -1;
+			}
+			x += velocityX * timePerFrame;
+		}
+		timeElapsed += timePerFrame;
 	}
 	
 	private function bobDown(time:Float) {

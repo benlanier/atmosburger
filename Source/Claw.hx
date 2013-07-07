@@ -92,10 +92,10 @@ class Claw extends Sprite
 		}
 	}
 	
-	public function getClawX():Float {
+	public function getArmEndX():Float {
 		return localToGlobal(new Point(arm.x + arm.width + claw.width/2, arm.y + arm.height/2)).x;
 	}
-	public function getClawY():Float {
+	public function getArmEndY():Float {
 		return localToGlobal(new Point(arm.x + arm.width + claw.width/2, arm.y + arm.height/2)).y;
 	}
 	

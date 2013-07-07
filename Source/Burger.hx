@@ -23,7 +23,6 @@ class Burger extends Sprite
 	}
 	
 	public function addBurgerPiece(piece:BurgerPiece) {
-		piece.isFlying = false;
 		piece.y = 4*size - Std.int(burgerPieces.length / 6) * size;
 		piece.x = Std.int(burgerPieces.length % 6) * size + size/2;
 		/*Actuate.apply(piece, { y:Std.int(burgerPieces.length / 6) * piece.height, 

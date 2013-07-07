@@ -54,7 +54,21 @@ class AtmosBurger extends Sprite {
 		
 		var piece:BurgerPiece;
 		for (i in 0...24) {
-			piece = new BurgerPiece(Meat);
+			if(i<6) {
+				piece = new BurgerPiece(BBun);
+			}
+			else if(i<12) {
+				piece = new BurgerPiece(Meat);
+			}
+			else if(i<15) {
+				piece = new BurgerPiece(Tomato);
+			}
+			else if(i<18) {
+				piece = new BurgerPiece(Lettuce);
+			}
+			else {
+				piece = new BurgerPiece(SBun);
+			}
 			burgerPieces.push(piece);
 			addChild(piece);
 		}
@@ -102,13 +116,17 @@ class AtmosBurger extends Sprite {
 			var hiti:Int = -1;
 			for (i in 0...burgerPieces.length) {
 				if (claw.hitTestObject(burgerPieces[i])) {
-					//burger.addBurgerPiece(burgerPieces[i]);
 					hiti = i;
+					
+					burgerPieces[i].setIsFlying(false);
 					
 					Actuate.stop(claw);
 					var time:Float = claw.retract(750);
-					Actuate.tween(burgerPieces[i], time, { x:claw.getClawX(),
-														   y:claw.getClawY() } ).ease(Linear.easeNone).onComplete(burger.addBurgerPiece, [burgerPieces[i]]);
+					
+					Actuate.tween(burgerPieces[i], time, { x:claw.getArmEndX(),
+														   y:claw.getArmEndY() }
+								 ).ease(Linear.easeNone).onComplete(burger.addBurgerPiece, [burgerPieces[i]]);
+					
 					break;
 				}
 			}
