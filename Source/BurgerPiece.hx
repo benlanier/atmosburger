@@ -31,6 +31,7 @@ class BurgerPiece extends Sprite
 	private var baseX:Float;
 	private var baseY:Float;
 	private var velocityX:Float;
+	private var ingredient:Ingredient;
 	
 	private var timeElapsed:Float = 0;
 	private var timePerFrame:Float = 1.0 / 60;
@@ -41,11 +42,15 @@ class BurgerPiece extends Sprite
 	public function getIsFlying():Bool {
 		return isFlying;
 	}
+	public function getIngredient():Ingredient {
+		return ingredient;
+	}
 	
 	public function new(i:Ingredient) 
 	{
 		super();
 		var bm:Bitmap;
+		ingredient = i;
 		switch (i) {
 			case BBun:
 				bm = new Bitmap(Assets.getBitmapData("assets/small/bbun.png"));
