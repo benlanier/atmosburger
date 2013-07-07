@@ -78,30 +78,6 @@ class AtmosBurger extends Sprite {
 		addChild(claw);
 		
 		burger = new Burger();
-		/*burger.addBurgerPiece(new BurgerPiece(BBun));
-		burger.addBurgerPiece(new BurgerPiece(BBun));
-		burger.addBurgerPiece(new BurgerPiece(BBun));
-		burger.addBurgerPiece(new BurgerPiece(BBun));
-		burger.addBurgerPiece(new BurgerPiece(BBun));
-		burger.addBurgerPiece(new BurgerPiece(BBun));
-		burger.addBurgerPiece(new BurgerPiece(Meat));
-		burger.addBurgerPiece(new BurgerPiece(Meat));
-		burger.addBurgerPiece(new BurgerPiece(Meat));
-		burger.addBurgerPiece(new BurgerPiece(Meat));
-		burger.addBurgerPiece(new BurgerPiece(Meat));
-		burger.addBurgerPiece(new BurgerPiece(Meat));
-		burger.addBurgerPiece(new BurgerPiece(Tomato));
-		burger.addBurgerPiece(new BurgerPiece(Lettuce));
-		burger.addBurgerPiece(new BurgerPiece(Tomato));
-		burger.addBurgerPiece(new BurgerPiece(Lettuce));
-		burger.addBurgerPiece(new BurgerPiece(Tomato));
-		burger.addBurgerPiece(new BurgerPiece(Lettuce));
-		burger.addBurgerPiece(new BurgerPiece(SBun));
-		burger.addBurgerPiece(new BurgerPiece(SBun));
-		burger.addBurgerPiece(new BurgerPiece(SBun));
-		burger.addBurgerPiece(new BurgerPiece(SBun));
-		burger.addBurgerPiece(new BurgerPiece(SBun));
-		burger.addBurgerPiece(new BurgerPiece(SBun));*/
 		addChild(burger);
 		
 		addEventListener (Event.ENTER_FRAME, update);
@@ -112,7 +88,9 @@ class AtmosBurger extends Sprite {
 	
 	// Entry point
 	public function update(event:Event) {
-		if (claw.getIsOut() && !claw.getIsRetracting()) {
+		if (burger.getLength >= 24) {
+		}
+		else if (claw.getIsOut() && !claw.getIsRetracting()) {
 			var hiti:Int = -1;
 			for (i in 0...burgerPieces.length) {
 				if (claw.hitTestObject(burgerPieces[i])) {
@@ -136,8 +114,6 @@ class AtmosBurger extends Sprite {
 			}
 		}
 	}
-	
-	
 	
 	public static function main () {
 		
