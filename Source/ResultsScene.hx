@@ -66,14 +66,18 @@ class ResultsScene extends Sprite
 		stars.alpha = 0;
 		addChild(stars);
 		
+		var starWidth:Float = stars.width / 5;
+		
 		// de la ghetto
 		var covering:Shape = new Shape();
 		covering.graphics.beginFill(0);
 		covering.graphics.drawRect(0, 0, stars.width, stars.height);
-		covering.x = stars.x+stars.width - (410 - (stars.width * score / 5));
+		covering.x = stars.x + stars.width - (starWidth * (5 - score));
 		covering.y = 245;
 		addChild(covering);
 		
+		trace(score);
+		trace(stars.width * score / 5);
 		
 		Actuate.tween(stars, 1.5, { alpha: 1 } );
 	}
