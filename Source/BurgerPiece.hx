@@ -67,13 +67,11 @@ class BurgerPiece extends Sprite
 		
 		baseX = (Math.random() * (Lib.stage.width - width/2)) + width/2;
 		baseY = Math.random() * (Lib.stage.height - 300) + 80;
-		
 		x = baseX;
 		y = baseY;
 		
 		phase = (Math.random() * 2) + 2;
 		phaseOffset = Math.random() * Math.PI / 2;
-		
 		amplitude = Math.random() * 90 + 10;
 		
 		velocityX = Math.random() * 250 - 125;

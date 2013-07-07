@@ -156,7 +156,6 @@ class AtmosBurger extends Sprite {
 			Actuate.stop(flag);
 		}
 	}
-	
 	public static function main () {
 		
 		Lib.current.addChild (new AtmosBurger ());
