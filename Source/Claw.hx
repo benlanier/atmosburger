@@ -61,11 +61,13 @@ class Claw extends Sprite
 		Actuate.tween(claw, time, { x: target.x } ).ease(Linear.easeNone).onComplete(retract, [750.0]).onUpdate(drawLine);
 	}
 	
-	public function retract(speed:Float) {
+	public function retract(speed:Float):Float {
 		var distance:Float = target.x - arm.width;
 		var time:Float = distance / speed;
 		setIsRetracting(true);
 		Actuate.tween(claw, time, { x: arm.width } ).ease(Linear.easeNone).onComplete(setIsOut, [false]).onUpdate(drawLine);
+		
+		return time;
 	}
 	
 	private function drawLine() {
@@ -90,6 +92,13 @@ class Claw extends Sprite
 		}
 	}
 	
+	public function getClawX():Float {
+		return localToGlobal(new Point(arm.x + arm.width + claw.width/2, arm.y + arm.height/2)).x;
+	}
+	public function getClawY():Float {
+		return localToGlobal(new Point(arm.x + arm.width + claw.width/2, arm.y + arm.height/2)).y;
+	}
+	
 	public function setIsOut(isOut:Bool) {
 		this.isOut = isOut;
 		if (!isOut) {
@@ -107,7 +116,7 @@ class Claw extends Sprite
 		return this.isRetracting;
 	}
 	
-	private function distance(x1:Float, y1:Float, x2:Float, y2:Float):Float {
+	public function distance(x1:Float, y1:Float, x2:Float, y2:Float):Float {
 		var x_ = x2 - x1;
 		var y_ = y2 - y1;
 		return Math.sqrt(x_ * x_ + y_ * y_);

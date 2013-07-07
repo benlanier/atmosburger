@@ -12,6 +12,7 @@ import nme.events.Event;
 import nme.geom.Matrix;
 import nme.Lib;
 import com.eclecticdesignstudio.motion.Actuate;
+import com.eclecticdesignstudio.motion.easing.Linear;
 
 /**
  * @author 
@@ -101,12 +102,13 @@ class AtmosBurger extends Sprite {
 			var hiti:Int = -1;
 			for (i in 0...burgerPieces.length) {
 				if (claw.hitTestObject(burgerPieces[i])) {
-					burger.addBurgerPiece(burgerPieces[i]);
+					//burger.addBurgerPiece(burgerPieces[i]);
 					hiti = i;
 					
 					Actuate.stop(claw);
-					claw.retract(750);
-					
+					var time:Float = claw.retract(750);
+					Actuate.tween(burgerPieces[i], time, { x:claw.getClawX(),
+														   y:claw.getClawY() } ).ease(Linear.easeNone).onComplete(burger.addBurgerPiece, [burgerPieces[i]]);
 					break;
 				}
 			}
