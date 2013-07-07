@@ -75,8 +75,6 @@ class BurgerPiece extends Sprite
 		amplitude = Math.random() * 90 + 10;
 		
 		velocityX = Math.random() * 250 - 125;
-		
-		addEventListener (Event.ENTER_FRAME, update);
 	}
 	
 	public function update(event:Event) {

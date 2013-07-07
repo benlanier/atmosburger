@@ -12,18 +12,19 @@ class Burger extends Sprite
 	private var burgerPieces:Array<BurgerPiece>;
 	private var size:Float = 19;
 	
-	public function getLength():Int {
-		return burgerPieces.length;
-	}
-	
-	public function new() 
+
+	private var burgerFinishedCB:Void -> Void;
+
+	public function new(cback:Void -> Void = null) 
 	{
 		super();
 		
 		burgerPieces = new Array<BurgerPiece>();
 		
 		x = Lib.stage.width / 2 + 150;
-		y = Lib.stage.height - size*4.5;
+		y = Lib.stage.height - size * 4.5;
+		
+		burgerFinishedCB = cback;
 	}
 	
 	public function addBurgerPiece(piece:BurgerPiece) {
@@ -34,5 +35,9 @@ class Burger extends Sprite
 		
 		burgerPieces.push(piece);
 		addChild(piece);
+		
+		if (burgerPieces.length == 24) {
+			burgerFinishedCB();
+		}
 	}
 }
