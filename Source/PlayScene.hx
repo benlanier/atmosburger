@@ -25,6 +25,7 @@ class PlayScene extends Sprite {
 	var burgerPieces:Array<BurgerPiece>;
 	var flag:AnimSprite;
 	
+	var sceneEnding:Bool;
 	
 	public function new () {
 		
@@ -35,6 +36,8 @@ class PlayScene extends Sprite {
 	
 	
 	private function initialize ():Void {
+		
+		sceneEnding = false;
 		
 		var skymatrix:Matrix = new Matrix();
 		skymatrix.createGradientBox(Lib.stage.width, Lib.stage.height, Math.PI/2);
@@ -120,16 +123,29 @@ class PlayScene extends Sprite {
 	}
 	
 	public function dropFlag() {
-		Actuate.tween(flag, 4.0, { y: Lib.stage.height } ).ease(Quad.easeIn).onUpdate(checkStabbedBurger);
+		Actuate.tween(flag, 4.0, { y: Lib.stage.height } ).ease(Quad.easeIn).onUpdate(checkStabbedBurger).onComplete(getResultsScene, [burger, true]);
 		claw.removeListeners();
 	}
 	
 	private function checkStabbedBurger() {
+		if (sceneEnding) return; // for some reason (actuate reasons probably) this function gets called multiple times sometimes
 		burger.x = Lib.stage.mouseX - burger.width / 2;
-		if (flag.y > burger.y + 19*3 && flag.x >= burger.x && flag.x <= burger.x + burger.width) {
+		if (flag.y > burger.y + 19 * 3 && flag.x >= burger.x && flag.x <= burger.x + burger.width) {
+			sceneEnding = true;
 			Actuate.stop(flag);
+			getResultsScene(burger, false);
 		}
 	}
 	
+	private function getResultsScene(b:Burger, intoAbyss:Bool) {
+		var blackBox:Shape = new Shape();
+		blackBox.graphics.beginFill(0);
+		blackBox.graphics.drawRect(0, 0, Lib.stage.width, Lib.stage.height);
+		blackBox.alpha = 0;
+		addChild(blackBox);
+		Actuate.tween(blackBox, 0.6, { alpha: 1 } ).onComplete(function() {
+			AtmosBurger.Game().changeScene(new ResultsScene(burger, 0.0));
+		});
+	}
 	
 }

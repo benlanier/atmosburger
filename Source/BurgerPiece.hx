@@ -47,24 +47,25 @@ class BurgerPiece extends Sprite
 		return ingredient;
 	}
 	
-	public function new(i:Ingredient) 
+	public function new(i:Ingredient, isLarge:Bool = false) 
 	{
 		super();
 		var bm:Bitmap;
 		ingredient = i;
+		var prefix:String = "assets/" + (isLarge ? "" : "small/");
 		switch (i) {
 			case BBun:
-				bm = new Bitmap(Assets.getBitmapData("assets/small/bbun.png"));
+				bm = new Bitmap(Assets.getBitmapData(prefix + "bbun.png"));
 			case Meat:
-				bm = new Bitmap(Assets.getBitmapData("assets/small/meat.png"));
+				bm = new Bitmap(Assets.getBitmapData(prefix + "meat.png"));
 			case Lettuce:
-				bm = new Bitmap(Assets.getBitmapData("assets/small/lettuce.png"));
+				bm = new Bitmap(Assets.getBitmapData(prefix + "lettuce.png"));
 			case Tomato:
-				bm = new Bitmap(Assets.getBitmapData("assets/small/tomato.png"));
+				bm = new Bitmap(Assets.getBitmapData(prefix + "tomato.png"));
 			case SBun:
-				bm = new Bitmap(Assets.getBitmapData("assets/small/sbun.png"));
+				bm = new Bitmap(Assets.getBitmapData(prefix + "sbun.png"));
 			case Bird:
-				bm = new Bitmap(Assets.getBitmapData("assets/small/claw.png"));
+				bm = new Bitmap(Assets.getBitmapData(prefix + "claw.png"));
 		}
 		bm.x = -bm.width / 2;
 		bm.y = -bm.height / 2;
