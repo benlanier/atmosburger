@@ -1382,7 +1382,10 @@ AtmosBurger.main = function() {
 }
 AtmosBurger.__super__ = browser.display.Sprite;
 AtmosBurger.prototype = $extend(browser.display.Sprite.prototype,{
-	changeScene: function(to) {
+	applaud: function() {
+		this.applause.play();
+	}
+	,changeScene: function(to) {
 		this.removeChild(this.currentScene);
 		this.currentScene = to;
 		this.addChild(this.currentScene);
@@ -1391,9 +1394,11 @@ AtmosBurger.prototype = $extend(browser.display.Sprite.prototype,{
 		nme.Lib.get_current().get_stage().align = browser.display.StageAlign.TOP_LEFT;
 		nme.Lib.get_current().get_stage().scaleMode = browser.display.StageScaleMode.NO_SCALE;
 		nme.Lib.get_current().get_stage().set_frameRate(0);
+		this.applause = nme.installer.Assets.getSound("assets/sound/applause.mp3");
 		this.currentScene = new TitleScene();
 		this.addChild(this.currentScene);
 	}
+	,applause: null
 	,currentScene: null
 	,__class__: AtmosBurger
 });
@@ -2304,8 +2309,7 @@ var ResultsScene = function(b,flagOffset) {
 	haxe.Log.trace(score,{ fileName : "ResultsScene.hx", lineNumber : 77, className : "ResultsScene", methodName : "new"});
 	haxe.Log.trace(stars.get_width() * score / 5,{ fileName : "ResultsScene.hx", lineNumber : 78, className : "ResultsScene", methodName : "new"});
 	com.eclecticdesignstudio.motion.Actuate.tween(stars,1.5,{ alpha : 1}).onComplete($bind(this,this.fadeInQuote),[this.getMolyQuote()]);
-	var sound = nme.installer.Assets.getSound("assets/sound/applause.mp3");
-	sound.play();
+	AtmosBurger.Game().applaud();
 };
 $hxClasses["ResultsScene"] = ResultsScene;
 ResultsScene.__name__ = ["ResultsScene"];
