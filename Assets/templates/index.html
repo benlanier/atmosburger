@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>AtmosBurger</title>
+	<script src="audio.js"></script>
+	<script src="jsfx.js"></script>
+	<script src="jsfxlib.js"></script>
+	<script>
+	var sndFire = jsfxlib.createWave(["sine",0.0000,0.4000,0.0000,0.1460,0.0000,0.0520,20.0000,881.0000,2400.0000,-0.7740,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.2570,0.0300,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0990,0.0000]);
+	var sndGrab = jsfxlib.createWave(["square",0.0000,0.4000,0.0000,0.0340,0.4800,0.1000,20.0000,1451.0000,2400.0000,0.0000,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]);
+	var sndFall = jsfxlib.createWave(["square",0.0000,0.4000,0.0000,0.2800,0.0000,1.4600,20.0000,429.0000,2400.0000,-0.1600,0.0000,0.0000,0.0100,0.0003,0.0000,0.0000,0.0000,0.4910,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]);
+	var sndResults = jsfxlib.createWave(["saw",0.0000,0.4000,0.0000,0.2000,0.0000,2.0000,20.0000,465.0000,2400.0000,0.0780,0.0000,0.4740,36.6744,0.0003,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,0.0000,1.0000,0.0000,0.0000,0.0000,0.0000]);
+	function Sounds() {
+	}
+	Sounds.prototype.playFire = function(w) {
+		sndFire.play();
+	}
+	Sounds.prototype.playGrab = function(w) {
+		sndGrab.play();
+	}
+	Sounds.prototype.playFall = function(w) {
+		sndFall.play();
+	}
+	Sounds.prototype.playResults = function(w) {
+		sndResults.play();
+	}
+	</script>
+</head>
+<body style="padding: 0; margin: 0; background-color: #FFFFFF;">
+	
+	<!-- <div id="haxe:trace" style="position: absolute; z-index: 2147483647; display: none;"></div> -->
+	<!-- hello -->
+	
+	
+	<div id="haxe:jeash" style="background-color: #FFFFFF; width: 800px; height: 600px" data-framerate="30"></div>
+	
+	
+	
+	<script>function winParameters () { return {}; }</script>
+	<script id="haxe:jeash:script" type="text/javascript" src="./AtmosBurger.js"></script>
+	
+	
+	
+</body>
+</html>

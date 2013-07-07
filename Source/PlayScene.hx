@@ -10,6 +10,7 @@ import nme.display.Sprite;
 import nme.display.StageAlign;
 import nme.display.StageScaleMode;
 import nme.events.Event;
+import nme.events.MouseEvent;
 import nme.geom.Matrix;
 import nme.Lib;
 import com.eclecticdesignstudio.motion.Actuate;
@@ -26,6 +27,8 @@ class PlayScene extends Sprite {
 	var flag:AnimSprite;
 	
 	var sceneEnding:Bool;
+	
+	var sounds:Sounds;
 	
 	public function new () {
 		
@@ -53,6 +56,13 @@ class PlayScene extends Sprite {
 		
 		claw = new Claw();
 		addChild(claw);
+		
+		sounds = new Sounds();
+		
+		Lib.stage.addEventListener(MouseEvent.MOUSE_DOWN, function(e:MouseEvent) {
+			claw.onClick(e);
+			sounds.playFire();
+		});
 		
 		flag = new AnimSprite("assets/small/flag.png", 36, 108);
 		flag.addAnim("wave", [0, 1], 0.1);
@@ -102,7 +112,7 @@ class PlayScene extends Sprite {
 			for (i in 0...burgerPieces.length) {
 				if (claw.hitTestObject(burgerPieces[i])) {
 					hiti = i;
-					
+					sounds.playGrab();
 					burgerPieces[i].setIsFlying(false);
 					
 					Actuate.stop(claw);
@@ -123,6 +133,7 @@ class PlayScene extends Sprite {
 	}
 	
 	public function dropFlag() {
+		sounds.playFall();
 		Actuate.tween(flag, 4.0, { y: Lib.stage.height } ).ease(Quad.easeIn).onUpdate(checkStabbedBurger).onComplete(getResultsScene, [burger, true]);
 		claw.removeListeners();
 	}

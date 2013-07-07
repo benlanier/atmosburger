@@ -13,6 +13,7 @@
 	<haxelib name="actuate" />
 	
 	<assets path="Assets" rename="assets" include="*" exclude="nme.svg" />
+	<template path="Assets/templates" rename="" if="html5" ></template>
 	
 	<icon name="Assets/nme.svg" />
 	

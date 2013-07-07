@@ -43,7 +43,6 @@ class Claw extends Sprite
 		x = baseX;
 		y = baseY;
 		
-		Lib.stage.addEventListener(MouseEvent.MOUSE_DOWN, onClick);
 		Lib.stage.addEventListener(Event.ENTER_FRAME, update);
 	}
 	
