@@ -16,6 +16,7 @@ enum Ingredient {
 	Lettuce;
 	Tomato;
 	SBun;
+	Bird;
 }
 
 /**
@@ -62,6 +63,8 @@ class BurgerPiece extends Sprite
 				bm = new Bitmap(Assets.getBitmapData("assets/small/tomato.png"));
 			case SBun:
 				bm = new Bitmap(Assets.getBitmapData("assets/small/sbun.png"));
+			case Bird:
+				bm = new Bitmap(Assets.getBitmapData("assets/small/claw.png"));
 		}
 		bm.x = -bm.width / 2;
 		bm.y = -bm.height / 2;
@@ -70,25 +73,56 @@ class BurgerPiece extends Sprite
 		//bobDown(1.0);
 		//Actuate.tween(this, 100.0, { x: this.x + 800 } ).ease(Linear.easeNone);
 		
-		baseX = (Math.random() * (Lib.stage.width - width/2)) + width/2;
-		baseY = Math.random() * (Lib.stage.height - 300) + 80;
-		x = baseX;
-		y = baseY;
-		
-		phase = (Math.random() * 2) + 2;
-		phaseOffset = Math.random() * Math.PI / 2;
-		amplitude = Math.random() * 90 + 10;
-		
-		velocityX = Math.random() * 250 - 125;
+		if (ingredient == Bird) {
+			baseX = -150;
+			baseY = Math.random() * (Lib.stage.height - 500) + 80;
+			x = baseX;
+			y = baseY;
+			
+			phase = 2;
+			phaseOffset = 0;
+			amplitude = 10;
+			
+			velocityX = 125;
+			if (Math.random() < 0.5)
+				velocityX *= -1;
+			
+		}
+		else {
+			baseX = (Math.random() * (Lib.stage.width - width/2)) + width/2;
+			baseY = Math.random() * (Lib.stage.height - 300) + 80;
+			x = baseX;
+			y = baseY;
+			
+			phase = (Math.random() * 2) + 2;
+			phaseOffset = Math.random() * Math.PI / 2;
+			amplitude = Math.random() * 90 + 10;
+			
+			velocityX = Math.random() * 250 - 125;
+		}
 	}
 	
 	public function update(event:Event) {
-		if(isFlying) {
-			y = baseY + Math.sin(timeElapsed / phase * Math.PI * 2 + phaseOffset) * amplitude;
-			if (x - width/2 < 0 || x + width/2 > Lib.stage.width) {
-				velocityX *= -1;
+		if (isFlying) {
+			if (ingredient == Bird) {
+				y = baseY + Math.sin(timeElapsed / phase * Math.PI * 2 + phaseOffset) * amplitude;
+				if (x < -200) {
+					x = Lib.stage.width + 150;
+					baseY = Math.random() * (Lib.stage.height - 500) + 80;
+				}
+				else if (x > Lib.stage.width + 200) {
+					x = -150;
+					baseY = Math.random() * (Lib.stage.height - 500) + 80;
+				}
+				x += velocityX * timePerFrame;
 			}
-			x += velocityX * timePerFrame;
+			else {
+				y = baseY + Math.sin(timeElapsed / phase * Math.PI * 2 + phaseOffset) * amplitude;
+				if (x - width/2 < 0 || x + width/2 > Lib.stage.width) {
+					velocityX *= -1;
+				}
+				x += velocityX * timePerFrame;
+			}
 		}
 		timeElapsed += timePerFrame;
 	}

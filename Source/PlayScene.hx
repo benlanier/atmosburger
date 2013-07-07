@@ -79,6 +79,9 @@ class PlayScene extends Sprite {
 			burgerPieces.push(piece);
 			addChild(piece);
 		}
+		piece = new BurgerPiece(Bird);
+		burgerPieces.push(piece);
+		addChild(piece);
 		
 		burger = new Burger(dropFlag);
 		addChild(burger);
