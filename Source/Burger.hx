@@ -38,7 +38,7 @@ class Burger extends Sprite
 				score += 0.75 / 6;
 		}
 		// SBun
-		for (i in 6...12) {
+		for (i in 18...24) {
 			if (burgerPieces[i].getIngredient() == SBun)
 				score += 1.25 / 6;
 			else if (burgerPieces[i].getIngredient() == BBun)
@@ -46,7 +46,7 @@ class Burger extends Sprite
 		}
 		
 		// Meat
-		for (i in 12...18) {
+		for (i in 6...12) {
 			if (burgerPieces[i].getIngredient() == Meat)
 				score += 1.25 / 6;
 			else if (burgerPieces[i].getIngredient() == Lettuce || burgerPieces[i].getIngredient() == Tomato)
