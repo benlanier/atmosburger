@@ -16,9 +16,13 @@ class Burger extends Sprite
 
 	private var burgerFinishedCB:Void -> Void;
 
-	public function new(cback:Void -> Void = null) 
+	public function new(cback:Void -> Void = null, isLarge:Bool = false) 
 	{
 		super();
+		
+		if (isLarge) {
+			size = 50;
+		}
 		
 		burgerPieces = new Array<BurgerPiece>();
 		
@@ -62,6 +66,10 @@ class Burger extends Sprite
 		}
 		
 		return score;
+	}
+	
+	public function getBurgerPieces():Array<BurgerPiece> {
+		return burgerPieces;
 	}
 	
 	public function addBurgerPiece(piece:BurgerPiece) {
