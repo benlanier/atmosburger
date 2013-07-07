@@ -1,6 +1,7 @@
 package ;
 
 
+import com.eclecticdesignstudio.motion.easing.Quad;
 import nme.Assets;
 import nme.display.Bitmap;
 import nme.display.GradientType;
@@ -22,6 +23,7 @@ class AtmosBurger extends Sprite {
 	var burger:Burger;
 	var claw:Claw;
 	var burgerPieces:Array<BurgerPiece>;
+	var flag:AnimSprite;
 	
 	
 	public function new () {
@@ -50,6 +52,12 @@ class AtmosBurger extends Sprite {
 		restaurant.y = Lib.stage.height - restaurant.height;
 		addChild(restaurant);
 		
+		flag = new AnimSprite("assets/small/flag.png", 36, 108);
+		flag.addAnim("wave", [0, 1], 0.1);
+		flag.playAnim("wave");
+		flag.x = Math.random() * Lib.stage.width * 2 / 4 + Lib.stage.width * 1 / 4; // middle half of the screen
+		addChild(flag);
+		
 		burgerPieces = new Array<BurgerPiece>();
 		
 		var piece:BurgerPiece;
@@ -77,7 +85,7 @@ class AtmosBurger extends Sprite {
 		claw = new Claw();
 		addChild(claw);
 		
-		burger = new Burger();
+		burger = new Burger(dropFlag);
 		/*burger.addBurgerPiece(new BurgerPiece(BBun));
 		burger.addBurgerPiece(new BurgerPiece(BBun));
 		burger.addBurgerPiece(new BurgerPiece(BBun));
@@ -107,11 +115,11 @@ class AtmosBurger extends Sprite {
 		addEventListener (Event.ENTER_FRAME, update);
 	}
 	
-	
-	
-	
 	// Entry point
 	public function update(event:Event) {
+		for (p in burgerPieces) {
+			p.update(event);
+		}
 		if (claw.getIsOut() && !claw.getIsRetracting()) {
 			var hiti:Int = -1;
 			for (i in 0...burgerPieces.length) {
@@ -137,7 +145,13 @@ class AtmosBurger extends Sprite {
 		}
 	}
 	
+	public function dropFlag() {
+		Actuate.tween(flag, 4.0, { y: Lib.stage.height } ).ease(Quad.easeIn).onUpdate(checkStabbedBurger);
+	}
 	
+	private function checkStabbedBurger() {
+		
+	}
 	
 	public static function main () {
 		
