@@ -92,6 +92,12 @@ class Claw extends Sprite
 		}
 	}
 	
+	public function removeListeners() {
+		Lib.stage.removeEventListener(MouseEvent.MOUSE_DOWN, onClick);
+		Lib.stage.removeEventListener(Event.ENTER_FRAME, update);
+		this.rotation = -90;
+	}
+	
 	public function getArmEndX():Float {
 		return localToGlobal(new Point(arm.x + arm.width + claw.width/2, arm.y + arm.height/2)).x;
 	}

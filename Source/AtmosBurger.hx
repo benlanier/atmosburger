@@ -147,10 +147,14 @@ class AtmosBurger extends Sprite {
 	
 	public function dropFlag() {
 		Actuate.tween(flag, 4.0, { y: Lib.stage.height } ).ease(Quad.easeIn).onUpdate(checkStabbedBurger);
+		claw.removeListeners();
 	}
 	
 	private function checkStabbedBurger() {
-		
+		burger.x = Lib.stage.mouseX - burger.width / 2;
+		if (flag.y > burger.y + 19*3 && flag.x >= burger.x && flag.x <= burger.x + burger.width) {
+			Actuate.stop(flag);
+		}
 	}
 	
 	public static function main () {
