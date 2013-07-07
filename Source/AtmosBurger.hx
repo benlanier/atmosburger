@@ -14,6 +14,7 @@ import nme.geom.Matrix;
 import nme.Lib;
 import com.eclecticdesignstudio.motion.Actuate;
 import com.eclecticdesignstudio.motion.easing.Linear;
+import nme.media.Sound;
 
 /**
  * @author 
@@ -22,6 +23,8 @@ class AtmosBurger extends Sprite {
 
 	private var currentScene:Sprite;
 	private static var _instance:AtmosBurger;
+	
+	private var applause:Sound;
 	
 	public function new () {
 		
@@ -37,6 +40,8 @@ class AtmosBurger extends Sprite {
 		Lib.current.stage.scaleMode = StageScaleMode.NO_SCALE;
 		Lib.current.stage.frameRate = 0;
 		
+		applause = Assets.getSound("assets/sound/applause.mp3");
+		
 		currentScene = new TitleScene();
 		addChild(currentScene);
 	}
@@ -45,6 +50,10 @@ class AtmosBurger extends Sprite {
 		removeChild(currentScene);
 		currentScene = to;
 		addChild(currentScene);
+	}
+	
+	public function applaud() {
+		applause.play();
 	}
 	
 	// ugh

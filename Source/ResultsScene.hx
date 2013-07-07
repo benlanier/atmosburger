@@ -79,8 +79,7 @@ class ResultsScene extends Sprite
 		
 		Actuate.tween(stars, 1.5, { alpha: 1 } ).onComplete(fadeInQuote, [getMolyQuote()]);
 		
-		var sound = Assets.getSound("assets/sound/applause.mp3");
-		sound.play();
+		AtmosBurger.Game().applaud();
 	}
 	
 	private function fadeInQuote(s:String) {
