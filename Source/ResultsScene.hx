@@ -78,6 +78,9 @@ class ResultsScene extends Sprite
 		trace(stars.width * score / 5);
 		
 		Actuate.tween(stars, 1.5, { alpha: 1 } ).onComplete(fadeInQuote, [getMolyQuote()]);
+		
+		var sound = Assets.getSound("assets/sound/applause.mp3");
+		sound.play();
 	}
 	
 	private function fadeInQuote(s:String) {
